@@ -9,8 +9,10 @@ syntax on
 colorscheme onedark
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'https://github.com/prabirshrestha/vim-lsp.git'
-Plug 'https://github.com/prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 call plug#end()
 
 if executable('gopls')
