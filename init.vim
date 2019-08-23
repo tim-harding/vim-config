@@ -10,8 +10,8 @@ colorscheme onedark
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'https://github.com/prabirshrestha/vim-lsp.git'
+Plug 'https://github.com/prabirshrestha/async.vim'
 call plug#end()
-
 
 if executable('gopls')
     au User lsp_setup call lsp#register_server({
