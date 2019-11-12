@@ -2,24 +2,30 @@ set nocompatible
 filetype plugin on
 runtime macros/matchit.vim
 
-set hlsearch!
+set nohlsearch
+set linebreak
 set history=200
 set number
+set ignorecase
+
+set noexpandtab
+set copyindent
+set preserveindent
+set softtabstop=0
+set tabstop=4
+set shiftwidth=4
+
+" Map Ctrl-Backspace to delete the previous word in insert mode.
+:imap <C-BS> <C-W>
+
+" Move on display lines
+onoremap <silent> j gj
+onoremap <silent> k gk
+
 syntax on
 colorscheme onedark
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
-
-if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
-endif
