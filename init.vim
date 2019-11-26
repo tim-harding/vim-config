@@ -18,6 +18,9 @@ set shiftwidth=4
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 :imap <C-BS> <C-W>
 
+" Capitalize last word
+:imap <C-L> <Esc>gUiwea
+
 " Move on display lines
 onoremap <silent> j gj
 onoremap <silent> k gk
