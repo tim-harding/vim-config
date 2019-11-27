@@ -21,6 +21,8 @@ set shiftwidth=4
 " Capitalize last word
 :imap <C-L> <Esc>gUiwea
 
+inoremap {<CR> {<CR>}<Esc>O
+
 " Move on display lines
 onoremap <silent> j gj
 onoremap <silent> k gk
