@@ -44,7 +44,13 @@ let g:python3_host_prog='C:/Windows/py.exe'
 " :PlugClean
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-clang'
 call plug#end()
 
 " See :help deoplete-options for a list of configuration options. 
 let g:deoplete#enable_at_startup = 1
+
+" deplete-clang settings
+let g:deoplete#sources#clang#libclang_path = 'C:/Program Files/LLVM/lib/libclang.lib'
+let g:deoplete#sources#clang#clang_header = 'C:/Program Files/LLVM/lib/clang'
+let g:deoplete#sources#clang#sort_algo = 'priority'
