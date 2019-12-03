@@ -27,7 +27,8 @@ set linespace=2
 " settings page `Manage app execution aliases` to turn this off. 
 " We need a python install with the neovim package installed with pip. 
 let g:python3_host_prog='C:/Windows/py.exe'
-let g:netrw_banner = 0
+let g:netrw_banner=0
+let mapleader=","
 
 " :help key-notation
 " :help map-overview
@@ -60,6 +61,12 @@ map! <A-U>     7
 map! <A-I>     8
 map! <A-O>     9
 map! <A-P>     9
+
+" Fix indentation
+nmap <leader>= gg=G<C-O>
+
+" YouCompleteMe semantic analysis shortcuts
+nmap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Add blank lines without inserting
 nmap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
