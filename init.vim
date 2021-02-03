@@ -119,7 +119,8 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
-Plug 'OmniSharp/omnisharp-vim'
+Plug 'ervandew/supertab'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -153,7 +154,7 @@ set history=1024
 set number
 
 " Search case-insensitive unless the term includes a capital
-set smartcase
+set ignorecase
 
 " Don't convert tabs to spaces by default
 set noexpandtab
@@ -187,11 +188,15 @@ set linespace=2
 " Support :find
 set path+=**
 
+colorscheme nord
 
+" For Neovide
+set guifont=Cascadia\ Code
 
-" ------------------------------------------------------------------------
-" General setup for non-embedded Neovim
-" ------------------------------------------------------------------------
+" Turn on lightline
+set laststatus=2
+
+let g:lightline = { 'colorscheme': 'nord' }
 
 " Note: Windows 10 adds python.exe as an alias to the Windows Store,
 " making it so Neovim is unable to find the executable. Use the Windows
@@ -206,26 +211,17 @@ set shellquote= shellpipe=\| shellxquote=
 set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
 set shellredir=\|\ Out-File\ -Encoding\ UTF8
 
-colorscheme nord
 
+
+
+" ---------------------------------------------------------------
+" LSP setup
+" ---------------------------------------------------------------
 lua require('lspconfig').rust_analyzer.setup({})
-
-lua <<EOL
-local lspconfig = require'lspconfig'
-lspconfig.texlab.setup{
-settings = {
-latex = {
-build = {
-onSave = true;
-}
-}
-}
-}
-EOL
 
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-" autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -239,82 +235,6 @@ set shortmess+=c
 " Use completions on all files
 autocmd BufEnter * lua require'completion'.on_attach()
 
-" For Neovide
-set guifont=Cascadia\ Code
-
-" Turn on lightline
-set laststatus=2
-
-let g:lightline = { 'colorscheme': 'nord' }
-
-" -------------------------------------------------------
-" Omnisharp config
-" -------------------------------------------------------
-
-" Don't autoselect first omnicomplete option, show options even if there is only
-" one (so the preview documentation is accessible). Remove 'preview', 'popup'
-" and 'popuphidden' if you don't want to see any documentation whatsoever.
-" Note that neovim does not support `popuphidden` or `popup` yet:
-" https://github.com/neovim/neovim/issues/10996
-if has('patch-8.1.1880')
-  	set completeopt=longest,menuone,popuphidden
-  	" Highlight the completion documentation popup background/foreground the same as
-  	" the completion menu itself, for better readability with highlighted
-  	" documentation.
-  	set completepopup=highlight:Pmenu,border:off
-else
-  	set completeopt=longest,menuone,preview
-  	" Set desired preview window height for viewing documentation.
-  	set previewheight=5
-endif
-
-" Tell ALE to use OmniSharp for linting C# files, and no other linters.
-let g:ale_linters = { 'cs': ['OmniSharp'] }
-
-augroup omnisharp_commands
-  	autocmd!
-
-  	" Show type information automatically when the cursor stops moving.
-  	" Note that the type is echoed to the Vim command line, and will overwrite
-  	" any other messages in this space including e.g. ALE linting messages.
-  	autocmd CursorHold *.cs OmniSharpTypeLookup
-
-  	" The following commands are contextual, based on the cursor position.
-  	autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osfu <Plug>(omnisharp_find_usages)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osfi <Plug>(omnisharp_find_implementations)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
-  	autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
-  	autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
-
-  	" Navigate up and down by method/property/field
-  	autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
-  	autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
-  	" Find all code errors/warnings for the current solution and populate the quickfix window
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osgcc <Plug>(omnisharp_global_code_check)
-  	" Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
-  	autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
-  	" Repeat the last code action performed (does not use a selector)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
-  	autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
-
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
-
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osnm <Plug>(omnisharp_rename)
-
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
-  	autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
-augroup END
-
-" Enable snippet completion, using the ultisnips plugin
-" let g:OmniSharp_want_snippet=1
 
 
 
@@ -322,6 +242,9 @@ augroup END
 " ---------------------------------------------------------
 " Macros
 " ---------------------------------------------------------
+
+" Easier completion for Emmet
+nmap <leader>c <C-y>,
 
 " :help key-notation
 " :help map-overview
@@ -342,9 +265,14 @@ nnoremap gd    <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
+" May turn these back on, but SuperTab may solve my problems
+
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Enter key for omni completion works as expected
+" :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " map <c-p> to manually trigger completion
 " imap <silent> <c-p> <Plug>(completion_trigger)
@@ -353,13 +281,10 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " imap <tab> <Plug>(completion_smart_tab)
 " imap <s-tab> <Plug>(completion_smart_s_tab)
 
-nnoremap <leader>H <C-W><C-J>
-nnoremap <leader>T <C-W><C-K>
-nnoremap <leader>D <C-W><C-H>
-nnoremap <leader>N <C-W><C-N>
-
-" Map Ctrl-Backspace to delete the previous word
-map! <C-BS> <C-W>
+nnoremap <leader>h <C-W><C-J>
+nnoremap <leader>t <C-W><C-K>
+nnoremap <leader>d <C-W><C-H>
+nnoremap <leader>n <C-W><C-L>
 
 imap {<CR> {<CR>}<Esc>O
 
@@ -397,8 +322,8 @@ noremap <A-T> {
 nmap <leader>= gg=G<C-O>
 
 " Add blank lines without inserting
-nnoremap <leader>h :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <leader>t :set paste<CR>m`O<Esc>``:set nopaste<CR>
+" nnoremap <leader>h :set paste<CR>m`o<Esc>``:set nopaste<CR>
+" nnoremap <leader>t :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " Start fuzzy finder
 nmap <leader>f :call fzf#run({'sink': 'e', 'source': 'git ls-files', 'window': {'width': 0.9, 'height': 0.6}})<Enter>
