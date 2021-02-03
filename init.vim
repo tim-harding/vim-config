@@ -1,21 +1,8 @@
-" sensible.vim - Defaults everyone can agree on
-" Maintainer:   Tim Pope <http://tpo.pe/>
-" Version:      1.2
-
-if exists('g:loaded_sensible') || &compatible
-  finish
-else
-  let g:loaded_sensible = 'yes'
-endif
-
-if has('autocmd')
-  filetype plugin indent on
-endif
-if has('syntax') && !exists('g:syntax_on')
-  syntax enable
-endif
-
-" Use :help 'option' to see the documentation for the given option.
+" ----------------------------------------------------------------
+" Vim sensible
+" ----------------------------------------------------------------
+filetype plugin indent on
+syntax enable
 
 set autoindent
 set backspace=indent,eol,start
@@ -24,83 +11,37 @@ set smarttab
 
 set nrformats-=octal
 
-if !has('nvim') && &ttimeoutlen == -1
-  set ttimeout
-  set ttimeoutlen=100
-endif
-
 set incsearch
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-endif
 
 set laststatus=2
 set ruler
 set wildmenu
 
-if !&scrolloff
-  set scrolloff=1
-endif
-if !&sidescrolloff
-  set sidescrolloff=5
-endif
+set sidescrolloff=5
 set display+=lastline
 
-if &encoding ==# 'latin1' && has('gui_running')
-  set encoding=utf-8
-endif
+set encoding=utf-8
 
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
-endif
+" Delete comment character when joining commented lines
+set formatoptions+=j 
 
-if has('path_extra')
-  setglobal tags-=./tags tags-=./tags; tags^=./tags;
-endif
-
-if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
-  set shell=/usr/bin/env\ bash
-endif
+setglobal tags-=./tags tags-=./tags; tags^=./tags;
 
 set autoread
 
-if &history < 1000
-  set history=1000
-endif
-if &tabpagemax < 50
-  set tabpagemax=50
-endif
-if !empty(&viminfo)
-  set viminfo^=!
-endif
+set tabpagemax=50
+set viminfo^=!
+
 set sessionoptions-=options
 set viewoptions-=options
 
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^Eterm'
-  set t_Co=16
-endif
+set t_Co=16
 
-" Load matchit.vim, but only if the user hasn't installed a newer version.
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
-
-if empty(mapcheck('<C-U>', 'i'))
-  inoremap <C-U> <C-G>u<C-U>
-endif
-if empty(mapcheck('<C-W>', 'i'))
-  inoremap <C-W> <C-G>u<C-W>
-endif
+runtime! macros/matchit.vim
 
 
-
-" vim:set ft=vim et sw=2:
 
 " -------------------------------------------------------
 " Plugins
@@ -115,8 +56,6 @@ call plug#begin()
 Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/completion-nvim'
-Plug 'neovim/nvim-lspconfig'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 Plug 'ervandew/supertab'
@@ -211,31 +150,7 @@ set shellquote= shellpipe=\| shellxquote=
 set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
 set shellredir=\|\ Out-File\ -Encoding\ UTF8
 
-
-
-
-" ---------------------------------------------------------------
-" LSP setup
-" ---------------------------------------------------------------
-lua require('lspconfig').rust_analyzer.setup({})
-
-autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
-
-" Turn off auto popup
-" let g:completion_enable_auto_popup = 0
-
-" Use completions on all files
-autocmd BufEnter * lua require'completion'.on_attach()
-
-
 
 
 
@@ -243,55 +158,28 @@ autocmd BufEnter * lua require'completion'.on_attach()
 " Macros
 " ---------------------------------------------------------
 
-" Easier completion for Emmet
-nmap <leader>c <C-y>,
-
 " :help key-notation
 " :help map-overview
 
 let mapleader = " "
 
-" Language server commands
-nnoremap K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap gd    <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-" nnoremap gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" nnoremap gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+" Easier completion for Emmet
+nmap <leader>c <C-y>,
 
+" Resizing panes
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
-" May turn these back on, but SuperTab may solve my problems
-
-" Use <Tab> and <S-Tab> to navigate through popup menu
-" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Enter key for omni completion works as expected
-" :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" map <c-p> to manually trigger completion
-" imap <silent> <c-p> <Plug>(completion_trigger)
-
-" Use tabs for completion
-" imap <tab> <Plug>(completion_smart_tab)
-" imap <s-tab> <Plug>(completion_smart_s_tab)
-
+" Moving between panes
 nnoremap <leader>h <C-W><C-J>
 nnoremap <leader>t <C-W><C-K>
 nnoremap <leader>d <C-W><C-H>
 nnoremap <leader>n <C-W><C-L>
 
+" Close braces automatically
 imap {<CR> {<CR>}<Esc>O
 
-" Move on display lines
-" nmap <silent> j gj
-" nmap <silent> k gk
-
+" Easier escape
 imap zz <Esc>
 
 " Homerow numpad
@@ -321,11 +209,8 @@ noremap <A-T> {
 " Fix indentation on selection
 nmap <leader>= gg=G<C-O>
 
-" Add blank lines without inserting
-" nnoremap <leader>h :set paste<CR>m`o<Esc>``:set nopaste<CR>
-" nnoremap <leader>t :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
 " Start fuzzy finder
 nmap <leader>f :call fzf#run({'sink': 'e', 'source': 'git ls-files', 'window': {'width': 0.9, 'height': 0.6}})<Enter>
 
+" Start Nerd Tree
 nnoremap <leader>nt :NERDTreeToggle<CR>
