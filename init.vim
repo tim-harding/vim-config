@@ -58,6 +58,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mattn/emmet-vim'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()
 
@@ -127,7 +130,7 @@ set path+=**
 colorscheme nord
 
 " For Neovide
-set guifont=Cascadia\ Code
+" set guifont=Cascadia\ Mono:h16
 
 " Turn on lightline
 set laststatus=2
@@ -147,6 +150,7 @@ set shellquote= shellpipe=\| shellxquote=
 set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
 set shellredir=\|\ Out-File\ -Encoding\ UTF8
 
+set relativenumber
 
 
 " ---------------------------------------------------------
@@ -159,7 +163,7 @@ set shellredir=\|\ Out-File\ -Encoding\ UTF8
 let mapleader = " "
 
 " Easier buffer switching
-map <leader><leader> <C-^>
+" map <leader><leader> <C-^>
 
 " Use normal paste command
 imap <C-v> <Esc>"+pa
@@ -169,40 +173,15 @@ nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " Moving between panes
-nnoremap <leader>h <C-W><C-J>
-nnoremap <leader>t <C-W><C-K>
-nnoremap <leader>d <C-W><C-H>
-nnoremap <leader>n <C-W><C-L>
+nnoremap <leader><Down> <C-W><C-J>
+nnoremap <leader><Up> <C-W><C-K>
+nnoremap <leader><Left> <C-W><C-H>
+nnoremap <leader><Right> <C-W><C-L>
 
 " Close braces automatically
 imap {<CR> {<CR>}<Esc>O
-
-" Easier escape
-imap zz <Esc>
-
-" Homerow numpad
-map! <A-S-Space> 0
-map! <A-B>       0
-map! <A-M>       1
-map! <A-W>       2
-map! <A-V>       3
-map! <A-H>       4
-map! <A-T>       5
-map! <A-N>       6
-map! <A-G>       7
-map! <A-C>       8
-map! <A-?>       9
-map! <A-L>       9
-
-" Easy hjkl movement in Dvorak
-map <A-d> h
-map <A-h> j
-map <A-t> k
-map <A-n> l
-
-" Easier paragraph movement
-noremap <A-H> }
-noremap <A-T> {
+imap [<CR> [<CR>]<Esc>O
+imap (<CR> (<CR>)<Esc>O
 
 " Fix indentation on selection
 nmap <leader>= gg=G<C-O>
@@ -304,8 +283,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>r <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -383,3 +362,10 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" Disable coc on text files
+autocmd FileType text let b:coc_suggest_disable = 1
+autocmd FileType markdown let b:coc_suggest_disable = 1
+
+
+" Neovide
+let g:neovide_cursor_animation_length = 0
