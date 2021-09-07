@@ -61,6 +61,10 @@ Plug 'preservim/nerdtree'
 Plug 'mattn/emmet-vim'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'neovim/nvim-lspconfig'
+
 
 call plug#end()
 
@@ -155,6 +159,13 @@ set relativenumber
 " Neovide
 let g:neovide_cursor_animation_length = 0
 
+" Source vim configuration upon save
+augroup vimrc     
+	autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+    autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+augroup END
+
+
 
 " ---------------------------------------------------------
 " Macros
@@ -194,3 +205,34 @@ nmap <leader>f :call fzf#run({'sink': 'e', 'source': 'git ls-files', 'window': {
 
 " Start Nerd Tree
 nnoremap <leader>nt :NERDTreeToggle<CR>
+
+" Use incsearch-easymotion for search
+function! s:incsearch_config(...) abort
+  return incsearch#util#deepextend(deepcopy({
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {
+  \     "\<CR>": '<Over>(easymotion)'
+  \   },
+  \   'is_expr': 0
+  \ }), get(a:, 1, {}))
+endfunction
+
+let g:EasyMotion_smartcase = 1
+
+noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+
+" <Leader>f{char} to move to {char}
+" map  <Leader>f <Plug>(easymotion-bd-f)
+" nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+" Move to Word
+map  <Leader>W <Plug>(easymotion-bd-W)
