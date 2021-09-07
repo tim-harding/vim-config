@@ -64,6 +64,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'folke/which-key.nvim'
 
 " Completion framework
 Plug 'hrsh7th/nvim-cmp'
@@ -194,10 +195,32 @@ augroup END
 let mapleader = " "
 
 " Easier buffer switching
-" map <leader><leader> <C-^>
+map <leader><leader> <C-^>
+
+" See the link below for configuration options:
+"https://github.com/folke/which-key.nvim#%EF%B8%8F-configuration
+lua << EOF
+  require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
 
 " Use normal paste command
-imap <C-v> <Esc>"+pa
+" imap <C-v> <Esc>"+pa
+
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
 
 " Resizing panes
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
@@ -257,7 +280,7 @@ map  <Leader>W <Plug>(easymotion-bd-W)
 
 
 " ----------------------------------------------------------
-"  LSP
+"  Rust LSP
 " ----------------------------------------------------------
 
 " For information on setting this all up:
