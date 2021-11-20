@@ -2,44 +2,88 @@
 " Vim sensible
 " ----------------------------------------------------------------
 
-filetype plugin indent on
+" Filetype detection
+filetype on
+" Load the associated plugin when a filetype is identified
+filetype plugin on 
+" Load the indentation rules when a filetype is identified
+filetype indent on
+
+" Enable syntax highlighting
 syntax enable
-
-set autoindent
-set backspace=indent,eol,start
-set smarttab
-
-set nrformats-=octal
-
-set incsearch
-
-set laststatus=2
-set ruler
-set wildmenu
-
-set sidescrolloff=5
-set display+=lastline
-
-set encoding=utf-8
-
-set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-
-" Delete comment character when joining commented lines
-set formatoptions+=j 
 
 setglobal tags-=./tags tags-=./tags; tags^=./tags;
 
-set autoread
+lua<<EOF
+-- Copy indent from current line when starting a new line
+vim.opt.autoindent = true
 
-set tabpagemax=50
-set viminfo^=!
+-- Backspace through anything in insert mode
+vim.opt.backspace = {
+	"indent", 
+	"eol", 
+	"start",
+}
 
-set sessionoptions-=options
-set viewoptions-=options
+-- a tab in front of a line inserts blanks according to 'shiftwidth'
+vim.opt.smarttab = true
 
-set t_Co=16
+-- Don't consider numbers that start with '0` to be octal
+vim.opt.nrformats:remove("octal")
 
-runtime! macros/matchit.vim
+-- Start searching before pressing enter
+vim.opt.incsearch = true
+
+-- Make the last window always have a statusline
+vim.opt.laststatus = 2
+
+-- Show the line and column number of the cursor position, separated by a comma
+vim.opt.ruler = true
+
+-- Enables "enhanced mode" of command-line completion. 
+-- When user hits <Tab> (or 'wildchar') to invoke completion, 
+-- the possible matches are shown in a menu just above the command-line
+vim.opt.wildmenu = true
+
+-- Always keep at least 5 screen columns 
+-- to the left and to the right of the cursor if 'nowrap' is set.  
+vim.opt.sidescrolloff = 5
+
+-- Display as much of the last line in a window as possible,
+-- rather than replacing it with @ characters
+vim.opt.display:append("lastline")
+
+-- set encoding=utf-8
+-- Set text encoding to UTF-8 rather than ASCII
+vim.opt.encoding = "utf-8"
+
+-- Makes `set :list`, which enables visible whitespace, prettier
+vim.opt.listchars = {
+	extends = "›",
+	precedes = "‹",
+	nbsp = "·",
+	trail = "·",
+	eol = "↲",
+	tab = "» ",
+}
+
+-- Delete comment character when joining commented lines
+vim.opt.formatoptions:append("j")
+
+-- Autoload file changes
+vim.opt.autoread = true
+
+-- Maximum number of tab pages to be opened
+vim.opt.tabpagemax = 50
+
+-- Remove "all options and mappings" from being
+-- saved and restored my :mksession
+vim.opt.sessionoptions:remove("options")
+
+-- Removes window- or buffer-local options from being affected
+-- by the :mkview command
+vim.opt.viewoptions:remove("options")
+EOF
 
 
 
@@ -91,6 +135,12 @@ call plug#end()
 " --------------------------------------------------------
 " General setup
 " --------------------------------------------------------
+
+
+lua<<EOF
+-- Enable the use of the mouse in all modes
+vim.opt.mouse = "a"
+EOF
 
 " Allow switching buffers without saving
 set hidden
@@ -387,3 +437,5 @@ autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 " have a fixed column for the diagnostics to appear in
 " this removes the jitter when warnings/errors flow in
 set signcolumn=yes
+
+lua require("init")
