@@ -64,7 +64,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'folke/which-key.nvim'
+
 
 " Completion framework
 Plug 'hrsh7th/nvim-cmp'
@@ -196,16 +196,6 @@ let mapleader = " "
 
 " Easier buffer switching
 map <leader><leader> <C-^>
-
-" See the link below for configuration options:
-"https://github.com/folke/which-key.nvim#%EF%B8%8F-configuration
-lua << EOF
-  require("which-key").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
-EOF
 
 " Use normal paste command
 " imap <C-v> <Esc>"+pa
@@ -373,28 +363,25 @@ cmp.setup({
 EOF
 
 " Code navigation shortcuts
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap gh     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap gi    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap gH 	<cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap gD   	<cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 
-" Code actions
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 " Set updatetime for CursorHold
 " 300ms of no cursor movement to trigger CursorHold
 set updatetime=300
 " Show diagnostic popup on cursor hold
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-
-" Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 
 " have a fixed column for the diagnostics to appear in
