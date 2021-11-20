@@ -6,11 +6,6 @@ lua<<EOF
 -- Note: Much of Vim Sensible is included by Neovim defaults. See
 -- https://github.com/neovim/neovim/issues/2676
 
--- Note: Rejected in Neovim defaults for performance reasons
--- Show the line and column number of the cursor position, separated by a comma
--- Note: Replaced by Lightline
-vim.opt.ruler = false
-
 -- Always keep at least 5 screen columns 
 -- to the left and to the right of the cursor if 'nowrap' is set.  
 vim.opt.sidescrolloff = 5
