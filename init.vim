@@ -1,37 +1,3 @@
-" ----------------------------------------------------------------
-" Vim sensible
-" ----------------------------------------------------------------
-
-lua<<EOF
--- Note: Much of Vim Sensible is included by Neovim defaults. See
--- https://github.com/neovim/neovim/issues/2676
-
--- Always keep at least 5 screen columns 
--- to the left and to the right of the cursor if 'nowrap' is set.  
-vim.opt.sidescrolloff = 5
-
--- set encoding=utf-8
--- Set text encoding to UTF-8 rather than ASCII
-vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
-
--- Makes `set :list`, which enables visible whitespace, prettier
-vim.opt.listchars = {
-	extends = "›",
-	precedes = "‹",
-	nbsp = "·",
-	trail = "·",
-	eol = "↲",
-	tab = "» ",
-}
-
--- Removes window- or buffer-local options from being affected
--- by the :mkview command
-vim.opt.viewoptions:remove("options")
-EOF
-
-
-
 " -------------------------------------------------------
 " Plugins
 " -------------------------------------------------------
@@ -81,8 +47,33 @@ call plug#end()
 " General setup
 " --------------------------------------------------------
 
-
 lua<<EOF
+-- Note: Much of Vim Sensible is included by Neovim defaults. See
+-- https://github.com/neovim/neovim/issues/2676
+
+-- Always keep at least 5 screen columns 
+-- to the left and to the right of the cursor if 'nowrap' is set.  
+vim.opt.sidescrolloff = 5
+
+-- set encoding=utf-8
+-- Set text encoding to UTF-8 rather than ASCII
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+
+-- Makes `set :list`, which enables visible whitespace, prettier
+vim.opt.listchars = {
+	extends = "›",
+	precedes = "‹",
+	nbsp = "·",
+	trail = "·",
+	eol = "↲",
+	tab = "» ",
+}
+
+-- Removes window- or buffer-local options from being affected
+-- by the :mkview command
+vim.opt.viewoptions:remove("options")
+
 -- Enable the use of the mouse in all modes
 vim.opt.mouse = "a"
 EOF
