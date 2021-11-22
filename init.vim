@@ -1,49 +1,40 @@
 " Information about using Lua as a configuration language:
 " https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 
-" -------------------------------------------------------
-" Plugins
-" -------------------------------------------------------
+lua<<EOF
+local packer = require("packer")
 
-" :PlugInstall
-" :PlugUpdate
-" :PlugClean
-" :PlugUpgrade upgrades Vim Plug
-call plug#begin()
+function my_startup()
+	-- Packer can manage itself
+	use 'wbthomason/packer.nvim'
 
-Plug 'arcticicestudio/nord-vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'preservim/nerdtree'
-Plug 'mattn/emmet-vim'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-Plug 'easymotion/vim-easymotion'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-easymotion.vim'
-Plug 'neovim/nvim-lspconfig'
+	use 'arcticicestudio/nord-vim'
+	-- use 'junegunn/fzf', { 'do': { -> fzf#install() } }
+	use 'junegunn/fzf.vim'
+	use 'itchyny/lightline.vim'
+	use 'preservim/nerdtree'
+	use 'mattn/emmet-vim'
+	-- use 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+	use 'easymotion/vim-easymotion'
+	use 'haya14busa/incsearch.vim'
+	use 'haya14busa/incsearch-easymotion.vim'
+	use 'neovim/nvim-lspconfig'
 
 
-" Completion framework
-Plug 'hrsh7th/nvim-cmp'
+	-- Completion framework
+	use 'hrsh7th/nvim-cmp'
 
-" LSP completion source for nvim-cmp
-Plug 'hrsh7th/cmp-nvim-lsp'
+	-- LSP completion source for nvim-cmp
+	use 'hrsh7th/cmp-nvim-lsp'
 
-" Snippet completion source for nvim-cmp
-Plug 'hrsh7th/cmp-vsnip'
+	-- See hrsh7th's other plugins for more completion sources!
 
-" Other usefull completion sources
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-buffer'
+	-- To enable more of the features of rust-analyzer, such as inlay hints and more!
+	-- use 'simrat39/rust-tools.nvim'
+end
 
-" See hrsh7th's other plugins for more completion sources!
-
-" To enable more of the features of rust-analyzer, such as inlay hints and more!
-Plug 'simrat39/rust-tools.nvim'
-
-call plug#end()
-
+packer.startup(my_startup)
+EOF
 
 
 " --------------------------------------------------------
@@ -145,7 +136,7 @@ vim.cmd("colorscheme nord")
 
 -- Configuration: Choose a statusline that makes 
 -- configuring this with Lua easy to understand
-vim.g.lightline = '{ "colorscheme": "nord" }'
+-- vim.g.lightline = '{ "colorscheme": "nord" }'
 
 -- Note: Windows 10 adds python.exe as an alias to the Windows Store,
 -- making it so Neovim is unable to find the executable. Use the Windows
@@ -370,5 +361,3 @@ autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 " have a fixed column for the diagnostics to appear in
 " this removes the jitter when warnings/errors flow in
 set signcolumn=yes
-
-lua require("init")
