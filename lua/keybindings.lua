@@ -1,10 +1,35 @@
 -- Operator-pending would be, for example, when you've typed 
 -- 'y' before executing 'yw'
-
+--
+-- Select mode is rarely used for anything other than snippet engines
+--
+-- More details here: https://github.com/nanotee/nvim-lua-guide#defining-mappings
 local Mode = {
 	-- Normal, visual, select, operator-pending
-	plain = "",
+	-- :map
+	all = "",
+	-- :nmap
+	normal = "n",
+	-- :vmap
+	visual_and_select = "v",
+	select_ = "s",
+	visual = "x",
+	operator_pending = "o",
+	-- map!
+	insert_and_command = "!",
+	-- imap
+	insert = "i",
+	insert_and_command_and_lang_arg = "l",
+	command_line = "c",
+	terminal = "t",
 }
+
+-- Easier buffer switching
+vim.api.nvim_set_keymap(
+	Mode.normal, 
+	"<Leader><Leader>",
+	"<C-^>"
+)
 
 -- " Easier buffer switching
 -- map <leader><leader> <C-^>
