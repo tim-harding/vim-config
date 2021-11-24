@@ -2,148 +2,10 @@
 " https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 
 lua<<EOF
-local packer = require("packer")
-
-function my_startup()
-	-- Packer can manage itself
-	use 'wbthomason/packer.nvim'
-
-	use 'arcticicestudio/nord-vim'
-	-- use 'junegunn/fzf', { 'do': { -> fzf#install() } }
-	use 'junegunn/fzf.vim'
-	use 'itchyny/lightline.vim'
-	use 'preservim/nerdtree'
-	use 'mattn/emmet-vim'
-	-- use 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-	use 'easymotion/vim-easymotion'
-	use 'haya14busa/incsearch.vim'
-	use 'haya14busa/incsearch-easymotion.vim'
-	use 'neovim/nvim-lspconfig'
-
-
-	-- Completion framework
-	use 'hrsh7th/nvim-cmp'
-
-	-- LSP completion source for nvim-cmp
-	use 'hrsh7th/cmp-nvim-lsp'
-
-	-- See hrsh7th's other plugins for more completion sources!
-
-	-- To enable more of the features of rust-analyzer, such as inlay hints and more!
-	-- use 'simrat39/rust-tools.nvim'
-end
-
-packer.startup(my_startup)
-EOF
-
-
-" --------------------------------------------------------
-" General setup
-" --------------------------------------------------------
-
-lua<<EOF
--- Note: Much of Vim Sensible is included by Neovim defaults. See
--- https://github.com/neovim/neovim/issues/2676
-
--- Always keep at least 5 screen columns 
--- to the left and to the right of the cursor if 'nowrap' is set.  
-vim.opt.sidescrolloff = 5
-
--- set encoding=utf-8
--- Set text encoding to UTF-8 rather than ASCII
-vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
-
--- Makes `set :list`, which enables visible whitespace, prettier
-vim.opt.listchars = {
-	extends = "›",
-	precedes = "‹",
-	nbsp = "·",
-	trail = "·",
-	eol = "↲",
-	tab = "» ",
-}
-
--- Removes window- or buffer-local options from being affected
--- by the :mkview command
-vim.opt.viewoptions:remove("options")
-
--- Enable the use of the mouse in all modes
-vim.opt.mouse = "a"
-
--- Allow switching buffers without saving
-vim.opt.hidden = true
-
--- Turns on spell checking. 
--- More information at :spell-quickstart
--- :setlocal spell spelllang=en_us
-
--- Forces a gap between the cursor and the top and bottom of the screen
-vim.opt.scrolloff = 3
-
--- Turns off the highlight left behind by searches
-vim.opt.hlsearch = false
-
--- Only wrap text at word boundaries
-vim.opt.linebreak = true
-
--- Embiggen the undo history
-vim.opt.history = 1024
-
--- Turn on line numbering
-vim.opt.number = true
-
--- Search case-insensitive unless the term includes a capital
-vim.opt.ignorecase = true
-
--- Don't convert tabs to spaces by default
-vim.opt.expandtab = false
-
--- Use spaces for tabs if the rest of the file already does
-vim.opt.copyindent = true
-
--- When changing a line's indentation, try to preserve the tab or space pattern
-vim.opt.preserveindent = true
-
--- Preserve indent when moving to a new line
-vim.opt.autoindent = true
-
--- Affects the number of spaces per tab when indenting with spaces
--- Backspace will delete a full tab character rather than a single space, good
--- for Python. 
-vim.opt.softtabstop = 0
-
--- Display width of a tab character
-vim.opt.tabstop = 4
-
--- Affects the behavior of auto-indent and shift commands
-vim.opt.shiftwidth = 4
-
--- Highlights the line the cursor is on
-vim.opt.cursorline = true
-
--- Give lines a little more breathing room
-vim.opt.linespace = 2
-
--- Support :find
-vim.opt.path:append("**")
-
-vim.opt.relativenumber = true
-
-vim.g.mapleader = ","
-
-vim.cmd("colorscheme nord")
-
--- Configuration: Choose a statusline that makes 
--- configuring this with Lua easy to understand
--- vim.g.lightline = '{ "colorscheme": "nord" }'
-
--- Note: Windows 10 adds python.exe as an alias to the Windows Store,
--- making it so Neovim is unable to find the executable. Use the Windows
--- settings page `Manage app execution aliases` to turn this off. 
--- We need a python install with the neovim package installed with pip. 
-vim.g.python3_host_prog = "C:/Windows/py.exe"
-vim.g.netrw_banner = 0
+require("plugins")
+require("rust_analyzer")
+require("lsp")
+require("general")
 EOF
 
 " Set the built-in shell to use Powershell on Windows
@@ -227,10 +89,6 @@ noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
 noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
 noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 
-" <Leader>f{char} to move to {char}
-" map  <Leader>f <Plug>(easymotion-bd-f)
-" nmap <Leader>f <Plug>(easymotion-overwin-f)
-
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
 
@@ -244,97 +102,8 @@ map  <Leader>W <Plug>(easymotion-bd-W)
 
 
 " ----------------------------------------------------------
-"  Rust LSP
+"  LSP
 " ----------------------------------------------------------
-
-" For information on setting this all up:
-" https://sharksforarms.dev/posts/neovim-rust/
-
-" Set completeopt to have a better completion experience
-" :help completeopt
-" menuone: popup even when there's only one match
-" noinsert: Do not insert text until a selection is made
-" noselect: Do not select, force user to select one from the menu
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing extra messages when using completion
-set shortmess+=c
-
-" Configure LSP through rust-tools.nvim plugin.
-" rust-tools will configure and enable certain LSP features for us.
-" See https://github.com/simrat39/rust-tools.nvim#configuration
-lua <<EOF
-local nvim_lsp = require'lspconfig'
-
-local opts = {
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        hover_with_actions = true,
-        inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-        },
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-    server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-                -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                },
-            }
-        }
-    },
-}
-
-require('rust-tools').setup(opts)
-EOF
-
-" Setup Completion
-" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
-lua <<EOF
-local cmp = require'cmp'
-cmp.setup({
-  -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
-  },
-
-  -- Installed sources
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'path' },
-    { name = 'buffer' },
-  },
-})
-EOF
 
 " Code navigation shortcuts
 nnoremap gh     <cmd>lua vim.lsp.buf.hover()<CR>
@@ -351,13 +120,5 @@ nnoremap ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
-" Set updatetime for CursorHold
-" 300ms of no cursor movement to trigger CursorHold
-set updatetime=300
 " Show diagnostic popup on cursor hold
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-
-
-" have a fixed column for the diagnostics to appear in
-" this removes the jitter when warnings/errors flow in
-set signcolumn=yes
