@@ -2,9 +2,10 @@
 " https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
 
 lua<<EOF
-package.loaded["config"] = nil
-local config = require "config" 
-config()
+require("plugins")
+require("general")
+require("lsp")
+require("rust_analyzer")
 EOF
 
 " Set the built-in shell to use Powershell on Windows
@@ -88,3 +89,16 @@ nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 " Show diagnostic popup on cursor hold
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+<<<<<<< HEAD
+
+
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
+
+
+
+" Lua
+lua require("config")
+=======
+>>>>>>> cd2cfce51f5b421f87080a75d014452c0b3c8d09

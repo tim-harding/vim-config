@@ -1,6 +1,6 @@
 local packer = require("packer")
 
-function my_startup()
+local function my_startup()
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
@@ -55,4 +55,8 @@ function my_startup()
 	-- use 'simrat39/rust-tools.nvim'
 end
 
-packer.startup(my_startup)
+local function plugins()
+	packer.startup(my_startup)
+end
+
+return plugins
