@@ -55,8 +55,4 @@ local function my_startup()
 	-- use 'simrat39/rust-tools.nvim'
 end
 
-local function plugins()
-	packer.startup(my_startup)
-end
-
-return plugins
+packer.startup(my_startup)

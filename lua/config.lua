@@ -6,8 +6,7 @@ end
 
 local function reload(module_name)
 	package.loaded[module_name] = nil
-	local module = require(module_name)
-	module()
+	require(module_name)
 end
 
 local function config()
@@ -15,6 +14,7 @@ local function config()
 	reload("plugins")
 	reload("keybindings")
 	reload("lsp")
+	reload("lualine_setup")
 end
 
 return config
