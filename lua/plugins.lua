@@ -72,6 +72,8 @@ local function my_startup()
     		'nvim-lua/plenary.nvim'
   		},
 	}
+
+	use "andymass/vim-matchup"
 end
 
 packer.startup(my_startup)
