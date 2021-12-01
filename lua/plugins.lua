@@ -48,6 +48,8 @@ local function my_startup()
 	use 'hrsh7th/cmp-cmdline'
 	use 'L3MON4D3/LuaSnip'
 
+	use 'windwp/nvim-autopairs'
+
 	use 'rmagatti/auto-session'
 end
 
