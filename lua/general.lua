@@ -1,7 +1,7 @@
 -- For information on setting this all up:
 -- https://sharksforarms.dev/posts/neovim-rust/
 
-vim.g.mapleader = " "
+vim.g.mapleader = ","
 
 -- Set completeopt to have a better completion experience
 -- :help completeopt

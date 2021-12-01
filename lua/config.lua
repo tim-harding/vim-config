@@ -20,6 +20,7 @@ local function config()
 	reload("configure_auto_session")
 	reload("configure_nvim_autopairs")
 	reload("treesitter")
+	reload("barbar")
 end
 
 return config
