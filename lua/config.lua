@@ -22,6 +22,7 @@ local function config()
 	reload("configure_kommentary")
 	reload("treesitter")
 	reload("barbar")
+	reload("indent_blankline_setup")
 end
 
 return config

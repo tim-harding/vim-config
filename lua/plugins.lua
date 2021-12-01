@@ -65,6 +65,8 @@ local function my_startup()
 	use "nathom/filetype.nvim"
 
 	use 'b3nj5m1n/kommentary'
+
+    use "lukas-reineke/indent-blankline.nvim"
 end
 
 packer.startup(my_startup)
