@@ -63,6 +63,8 @@ local function my_startup()
 	use 'rmagatti/auto-session'
 
 	use "nathom/filetype.nvim"
+
+	use 'b3nj5m1n/kommentary'
 end
 
 packer.startup(my_startup)
