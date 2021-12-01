@@ -61,6 +61,8 @@ local function my_startup()
 	use 'windwp/nvim-autopairs'
 
 	use 'rmagatti/auto-session'
+
+	use "nathom/filetype.nvim"
 end
 
 packer.startup(my_startup)
