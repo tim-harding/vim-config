@@ -19,6 +19,7 @@ local function config()
 	reload("configure_nvim_cmp")
 	reload("configure_auto_session")
 	reload("configure_nvim_autopairs")
+	reload("treesitter")
 end
 
 return config

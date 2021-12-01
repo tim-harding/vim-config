@@ -29,6 +29,3 @@ vim.api.nvim_set_keymap(
 	":NvimTreeFindFile<CR>",
 	{ noremap = true }
 )
-
--- this variable must be enabled for colors to be applied properly
-vim.opt.termguicolors = true;

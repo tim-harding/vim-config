@@ -114,7 +114,11 @@ vim.opt.path:append("**")
 
 vim.opt.relativenumber = true
 
+vim.g.nord_contrast = true
+vim.g.nord_borders = true
+
 vim.cmd("colorscheme nord")
+vim.opt.termguicolors = true;
 
 -- Configuration: Choose a statusline that makes 
 -- configuring this with Lua easy to understand
