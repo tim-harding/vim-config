@@ -8,10 +8,10 @@ config()
 EOF
 
 " Set the built-in shell to use Powershell on Windows
-let &shell = has('win32') ? 'powershell' : 'pwsh'
-set shellquote= shellpipe=\| shellxquote=
-set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
-set shellredir=\|\ Out-File\ -Encoding\ UTF8
+" let &shell = has('win32') ? 'powershell' : 'pwsh'
+" set shellquote= shellpipe=\| shellxquote=
+" set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
+" set shellredir=\|\ Out-File\ -Encoding\ UTF8
 
 " Source vim configuration upon save
 augroup vimrc     

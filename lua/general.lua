@@ -9,6 +9,7 @@ vim.g.mapleader = " "
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
 vim.opt.completeopt = {
+	"menu",
 	"menuone",
 	"noinsert",
 	"noselect",

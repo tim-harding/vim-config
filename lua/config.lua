@@ -13,10 +13,10 @@ local function config()
 	reload("general")
 	reload("plugins")
 	reload("keybindings")
-	reload("lsp")
 	reload("lsp_clangd")
 	reload("configure_lualine")
 	reload("configure_nvim_tree")
+	reload("configure_nvim_cmp")
 	reload("configure_auto_session")
 end
 

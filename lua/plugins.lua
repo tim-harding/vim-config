@@ -41,20 +41,13 @@ local function my_startup()
 	}
 
 	use 'neovim/nvim-lspconfig'
-	-- Completion framework
 	use 'hrsh7th/nvim-cmp'
-	-- LSP completion source for nvim-cmp
 	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-path'
+	use 'hrsh7th/cmp-cmdline'
 
-
-	use {
-  	  'rmagatti/auto-session'
-	}
-
-	-- See hrsh7th's other plugins for more completion sources!
-
-	-- To enable more of the features of rust-analyzer, such as inlay hints and more!
-	-- use 'simrat39/rust-tools.nvim'
+	use 'rmagatti/auto-session'
 end
 
 packer.startup(my_startup)
