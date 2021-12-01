@@ -1,5 +1,7 @@
 local packer = require("packer")
 
+-- Todo: indent blankline and line numbers too bright
+
 local function my_startup()
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
@@ -59,14 +61,17 @@ local function my_startup()
 	use 'L3MON4D3/LuaSnip'
 
 	use 'windwp/nvim-autopairs'
-
 	use 'rmagatti/auto-session'
-
 	use "nathom/filetype.nvim"
-
 	use 'b3nj5m1n/kommentary'
-
     use "lukas-reineke/indent-blankline.nvim"
+
+	use {
+  		'lewis6991/gitsigns.nvim',
+  		requires = {
+    		'nvim-lua/plenary.nvim'
+  		},
+	}
 end
 
 packer.startup(my_startup)

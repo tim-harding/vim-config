@@ -23,6 +23,7 @@ local function config()
 	reload("treesitter")
 	reload("barbar_setup")
 	reload("indent_blankline_setup")
+	reload("gitsigns_setup")
 end
 
 return config
