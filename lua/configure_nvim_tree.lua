@@ -1,10 +1,7 @@
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
 
-local nvim_tree = require "nvim-tree"
-
--- 0 by default
-vim.g.nvim_tree_gitignore = 1 
+local nvim_tree = require("nvim-tree")
 
 -- 0 by default, closes the tree when you open a file
 vim.g.nvim_tree_quit_on_open = 1 

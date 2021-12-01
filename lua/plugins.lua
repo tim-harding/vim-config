@@ -46,6 +46,11 @@ local function my_startup()
 	-- LSP completion source for nvim-cmp
 	use 'hrsh7th/cmp-nvim-lsp'
 
+
+	use {
+  	  'rmagatti/auto-session'
+	}
+
 	-- See hrsh7th's other plugins for more completion sources!
 
 	-- To enable more of the features of rust-analyzer, such as inlay hints and more!

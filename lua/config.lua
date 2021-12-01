@@ -15,8 +15,9 @@ local function config()
 	reload("keybindings")
 	reload("lsp")
 	reload("lsp_clangd")
-	reload("lualine_setup")
-	reload("nvim_tree_setup")
+	reload("configure_lualine")
+	reload("configure_nvim_tree")
+	reload("configure_auto_session")
 end
 
 return config
