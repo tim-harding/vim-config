@@ -6,8 +6,16 @@ local function my_startup()
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
+	-- Chrome plugin
+	use {
+    	'glacambre/firenvim',
+    	run = function() vim.fn['firenvim#install'](0) end
+	}
+
+	-- Color scheme
 	use 'shaunsingh/nord.nvim'
 
+	-- Status line
 	use {
 		"nvim-lualine/lualine.nvim",
 		requires = {
@@ -16,26 +24,23 @@ local function my_startup()
 		}
 	}
 
+	-- File tree
 	use {
     	'kyazdani42/nvim-tree.lua',
     	requires = 'kyazdani42/nvim-web-devicons',
 	}
 
-	use {
-    	'glacambre/firenvim',
-    	run = function() vim.fn['firenvim#install'](0) end
-	}
-
+	-- Easymotion plugin
 	-- TODO: Configure
 	use {
   	  'phaazon/hop.nvim',
-  	  branch = 'v1', -- optional but strongly recommended
+  	  branch = 'v1',
   	  config = function()
     	-- you can configure Hop the way you like here; see :h hop-config
-    	require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
   	  end
 	}
 
+	-- Syntax highlighting
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'

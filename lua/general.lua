@@ -31,8 +31,8 @@ vim.opt.updatetime = 300
 -- Note: Much of Vim Sensible is included by Neovim defaults. See
 -- https://github.com/neovim/neovim/issues/2676
 
--- Always keep at least 5 screen columns 
--- to the left and to the right of the cursor if 'nowrap' is set.  
+-- Always keep at least 5 screen columns
+-- to the left and to the right of the cursor if 'nowrap' is set.
 vim.opt.sidescrolloff = 5
 
 -- set encoding=utf-8
@@ -60,7 +60,7 @@ vim.opt.mouse = "a"
 -- Allow switching buffers without saving
 vim.opt.hidden = true
 
--- Turns on spell checking. 
+-- Turns on spell checking.
 -- More information at :spell-quickstart
 -- :setlocal spell spelllang=en_us
 
@@ -96,7 +96,7 @@ vim.opt.autoindent = true
 
 -- Affects the number of spaces per tab when indenting with spaces
 -- Backspace will delete a full tab character rather than a single space, good
--- for Python. 
+-- for Python.
 vim.opt.softtabstop = 0
 
 -- Display width of a tab character
@@ -116,19 +116,13 @@ vim.opt.path:append("**")
 
 vim.opt.relativenumber = true
 
-vim.g.nord_contrast = true
-vim.g.nord_borders = true
-
-vim.cmd("colorscheme nord")
-vim.opt.termguicolors = true;
-
--- Configuration: Choose a statusline that makes 
+-- Configuration: Choose a statusline that makes
 -- configuring this with Lua easy to understand
 -- vim.g.lightline = '{ "colorscheme": "nord" }'
 
 -- Note: Windows 10 adds python.exe as an alias to the Windows Store,
 -- making it so Neovim is unable to find the executable. Use the Windows
--- settings page `Manage app execution aliases` to turn this off. 
--- We need a python install with the neovim package installed with pip. 
+-- settings page `Manage app execution aliases` to turn this off.
+-- We need a python install with the neovim package installed with pip.
 vim.g.python3_host_prog = "C:/Windows/py.exe"
 vim.g.netrw_banner = 0
