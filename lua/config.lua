@@ -15,17 +15,17 @@ local function config()
 	end
 
 	reload("nord_setup")
+	reload("treesitter")
+
 	reload("keybindings")
 	reload("lualine_setup")
 
 	reload("nvim_cmp_setup")
 	reload("lsp_clangd")
 
-	reload("treesitter")
 	reload("indent_blankline_setup")
 	reload("gitsigns_setup")
 
-	reload("bufferline_setup")
 	reload("nvim_tree_setup")
 end
 

@@ -52,11 +52,6 @@ local function my_startup()
   	  requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
-	use {
-		'akinsho/bufferline.nvim',
-		requires = 'kyazdani42/nvim-web-devicons'
-	}
-
 	use 'neovim/nvim-lspconfig'
 	use 'hrsh7th/nvim-cmp'
 	use 'hrsh7th/cmp-nvim-lsp'
