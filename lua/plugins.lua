@@ -48,8 +48,8 @@ local function my_startup()
 	}
 
 	use {
-  		'romgrk/barbar.nvim',
-  		requires = {'kyazdani42/nvim-web-devicons'}
+		'akinsho/bufferline.nvim', 
+		requires = 'kyazdani42/nvim-web-devicons'
 	}
 
 	use 'neovim/nvim-lspconfig'

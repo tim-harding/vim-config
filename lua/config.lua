@@ -21,9 +21,9 @@ local function config()
 	reload("nvim_autopairs_setup")
 	reload("kommentary_setup")
 	reload("treesitter")
-	reload("barbar_setup")
 	reload("indent_blankline_setup")
 	reload("gitsigns_setup")
+	reload("bufferline_setup")
 end
 
 return config

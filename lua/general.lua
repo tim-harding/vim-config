@@ -1,6 +1,8 @@
 -- For information on setting this all up:
 -- https://sharksforarms.dev/posts/neovim-rust/
 
+vim.opt.inccommand = "nosplit"
+
 vim.g.mapleader = ","
 
 -- Set completeopt to have a better completion experience
