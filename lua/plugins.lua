@@ -23,7 +23,7 @@ local function my_startup()
 
 	use {
     	'glacambre/firenvim',
-    	run = function() vim.fn['firenvim#install'](0) end 
+    	run = function() vim.fn['firenvim#install'](0) end
 	}
 
 	-- TODO: Configure
@@ -48,7 +48,7 @@ local function my_startup()
 	}
 
 	use {
-		'akinsho/bufferline.nvim', 
+		'akinsho/bufferline.nvim',
 		requires = 'kyazdani42/nvim-web-devicons'
 	}
 
@@ -61,7 +61,6 @@ local function my_startup()
 	use 'L3MON4D3/LuaSnip'
 
 	use 'windwp/nvim-autopairs'
-	use 'rmagatti/auto-session'
 	use "nathom/filetype.nvim"
 	use 'b3nj5m1n/kommentary'
     use "lukas-reineke/indent-blankline.nvim"
