@@ -30,8 +30,11 @@ local function my_startup()
     	requires = 'kyazdani42/nvim-web-devicons',
 	}
 
+	use {
+		"easymotion/vim-easymotion",
+	}
+
 	-- Easymotion plugin
-	-- TODO: Configure
 	use {
   	  'phaazon/hop.nvim',
   	  branch = 'v1',

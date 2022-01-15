@@ -5,15 +5,15 @@ end
 
 local function config()
 	reload("general")
+	reload("keybindings")
 	reload("plugins")
 	reload("hop_setup")
 	reload("nvim_autopairs_setup")
 
 	if vim.fn.exists("g:vscode") == 1 then
+		reload("easymotion_setup")
 		return
 	end
-
-	reload("keybindings")
 
 	reload("nord_setup")
 	reload("treesitter")
