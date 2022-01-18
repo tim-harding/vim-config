@@ -75,6 +75,8 @@ local function my_startup()
   		},
 	}
 
+	use "justinmk/vim-sneak"
+
 	use "andymass/vim-matchup"
 end
 
