@@ -91,3 +91,10 @@ vim.api.nvim_set_keymap(
 	"<C-W><C-L>",
 	remap_settings
 )
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<C-w>",
+	"<Cmd>close<CR>",
+	remap_settings
+)
