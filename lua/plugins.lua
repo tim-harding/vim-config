@@ -1,7 +1,5 @@
 local packer = require("packer")
 
--- Todo: indent blankline and line numbers too bright
-
 local function my_startup()
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
@@ -14,6 +12,7 @@ local function my_startup()
 
 	-- Color scheme
 	use 'shaunsingh/nord.nvim'
+	use 'rmehri01/onenord.nvim'
 
 	-- Status line
 	use {
@@ -28,10 +27,6 @@ local function my_startup()
 	use {
     	'kyazdani42/nvim-tree.lua',
     	requires = 'kyazdani42/nvim-web-devicons',
-	}
-
-	use {
-		"easymotion/vim-easymotion",
 	}
 
 	-- Easymotion plugin
@@ -51,23 +46,25 @@ local function my_startup()
 
 	-- TODO: Configure
 	use {
-  	  'nvim-telescope/telescope.nvim',
-  	  requires = { {'nvim-lua/plenary.nvim'} }
+		'nvim-telescope/telescope.nvim',
+		requires = {
+			{'nvim-lua/plenary.nvim'}
+		}
 	}
 
-	use 'neovim/nvim-lspconfig'
-	use 'hrsh7th/nvim-cmp'
-	use 'hrsh7th/cmp-nvim-lsp'
-	use 'hrsh7th/cmp-buffer'
-	use 'hrsh7th/cmp-path'
-	use 'hrsh7th/cmp-cmdline'
-	use 'L3MON4D3/LuaSnip'
-
+	-- Automatic bracket matching
 	use 'windwp/nvim-autopairs'
+
+	-- A faster version of the built-in filetype identifier
 	use "nathom/filetype.nvim"
+
+	-- <leader>cc for commenting lines
 	use 'b3nj5m1n/kommentary'
+
+	-- Indentation guides
     use "lukas-reineke/indent-blankline.nvim"
 
+	-- Puts Git info in the gutter
 	use {
   		'lewis6991/gitsigns.nvim',
   		requires = {
@@ -75,9 +72,20 @@ local function my_startup()
   		},
 	}
 
-	use "justinmk/vim-sneak"
-
+	-- Extends % to more kinds of tokens
 	use "andymass/vim-matchup"
+
+	use 'neovim/nvim-lspconfig'
+	use 'hrsh7th/nvim-cmp'
+	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-path'
+	use 'hrsh7th/cmp-cmdline'
+	use 'L3MON4D3/LuaSnip'
+
+	use 'simrat39/rust-tools.nvim'
+
+	-- Debug adapter protocol for debugging
+	use 'mfussenegger/nvim-dap'
 end
 
 packer.startup(my_startup)

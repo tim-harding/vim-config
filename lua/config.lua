@@ -21,6 +21,7 @@ local function config()
 	reload("nvim_cmp_setup")
 	reload("lsp_clangd")
 
+	reload("telescope_setup")
 	reload("kommentary_setup")
 	reload("lualine_setup")
 	reload("indent_blankline_setup")

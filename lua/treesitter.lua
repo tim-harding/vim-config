@@ -3,9 +3,4 @@ require('nvim-treesitter.configs').setup {
   	highlight = {
     	enable = true,
   	},
-
-  	-- Setup for vim-matchup plugin
-  	matchup = {
-    	enable = true,
-  	},
 }
